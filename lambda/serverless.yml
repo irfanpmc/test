@@ -1,0 +1,206 @@
+service: big
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: token
+  region: us-east-2
+
+
+functions:
+  newBigApiCreateEmail:
+    handler: newBigApiCreateEmail.newBigApiCreateEmail
+    package:
+      include:
+        - node_modules/**     
+    events:
+      - http:
+          method: POST
+          path: api/v1/create-email
+          integration: lambda
+          cors: true
+          # authorizer:
+          #   name: auth_log
+          #   arn: arn:aws:cognito-idp:us-east-2:017065859617:userpool/us-east-2_G0Ce3hlva
+          request:
+            template:
+              application/json: >
+                {
+                  "email" : "$input.params("email")",
+                  "Reff" : "$input.params("Reff")",
+                  "domain" : "$input.params("domain")",
+                  "uname" : "$input.params("uname")",
+                  "url" : "$input.params("url")",
+                  "token" : "$input.params("token")",
+                  "headers": {
+                      #foreach($param in $input.params().header.keySet())
+                      "$param": "$util.escapeJavaScript($input.params().header.get($param))"
+                      #if($foreach.hasNext),#end
+                      #end
+                  }
+                }
+  newBigApiGetLoc:
+    handler: newBigApiGetLoc.newBigApiGetLoc
+    package:
+      include:
+        - node_modules/** 
+    events:
+      - http:
+          method: POST
+          path: api/v1/get-location
+          integration: lambda
+          cors: true
+          # authorizer:
+          #   name: auth_log
+          #   arn: arn:aws:cognito-idp:us-east-2:017065859617:userpool/us-east-2_G0Ce3hlva
+          request:
+            template:
+              application/json: >
+                {
+                  "url" : "$input.params("url")",                 
+                  "headers": {
+                      #foreach($param in $input.params().header.keySet())
+                      "$param": "$util.escapeJavaScript($input.params().header.get($param))"
+                      #if($foreach.hasNext),#end
+                      #end
+                  }
+                }
+  newBigApiGetMessage:
+    handler: newBigApiGetMessage.newBigApiGetMessage
+    package:
+      include:
+        - node_modules/**      
+    events:
+      - http:
+          method: POST
+          path: api/v1/message
+          integration: lambda
+          cors: true
+          # authorizer:
+          #   name: auth_log
+          #   arn: arn:aws:cognito-idp:us-east-2:017065859617:userpool/us-east-2_G0Ce3hlva
+          request:
+            template:
+              application/json: >
+                {
+                  "email" : "$input.params("email")",
+                  "Reff" : "$input.params("Reff")",
+                  "domain" : "$input.params("domain")",
+                  "uname" : "$input.params("uname")",
+                  "url" : "$input.params("url")",
+                  "token" : "$input.params("token")",
+               
+                  "headers": {
+                      #foreach($param in $input.params().header.keySet())
+                      "$param": "$util.escapeJavaScript($input.params().header.get($param))"
+                      #if($foreach.hasNext),#end
+                      #end
+                  }
+                }
+  newBigApiRegist:
+    handler: newBigApiRegist.newBigApiRegist
+    package:
+      include:
+        - node_modules/**       
+    events:
+      - http:
+          method: POST
+          path: api/v1/register
+          integration: lambda
+          cors: true
+          # authorizer:
+          #   name: auth_log
+          #   arn: arn:aws:cognito-idp:us-east-2:017065859617:userpool/us-east-2_G0Ce3hlva
+          request:
+            template:
+              application/json: >
+                {
+                  "email" : "$input.params("email")",
+                  "Reff" : "$input.params("Reff")",
+                  "domain" : "$input.params("domain")",
+                  "uname" : "$input.params("uname")",
+                  "url" : "$input.params("url")",
+                  "token" : "$input.params("token")",
+                  "headers": {
+                      #foreach($param in $input.params().header.keySet())
+                      "$param": "$util.escapeJavaScript($input.params().header.get($param))"
+                      #if($foreach.hasNext),#end
+                      #end
+                  }
+                }
+  newBigApiVerification:
+    handler: newBigApiVerification.newBigApiVerification
+    package:
+      include:
+        - node_modules/**
+        
+    events:
+      - http:
+          method: POST
+          path: api/v1/email-verification
+          integration: lambda
+          cors: true
+          # authorizer:
+          #   name: auth_log
+          #   arn: arn:aws:cognito-idp:us-east-2:017065859617:userpool/us-east-2_G0Ce3hlva
+          request:
+            template:
+              application/json: >
+                {
+                  "email" : "$input.params("email")",
+                  "Reff" : "$input.params("Reff")",
+                  "domain" : "$input.params("domain")",
+                  "uname" : "$input.params("uname")",
+                  "url" : "$input.params("url")",
+                  "token" : "$input.params("token")",
+               
+                  "headers": {
+                      #foreach($param in $input.params().header.keySet())
+                      "$param": "$util.escapeJavaScript($input.params().header.get($param))"
+                      #if($foreach.hasNext),#end
+                      #end
+                  }
+                }
+  newSignup:
+    handler: signup.newSignup
+    package:
+      include:
+        - node_modules/**
+        
+    events:
+      - http:
+          method: GET
+          path: api/tamvan/signup
+          integration: lambda
+          cors: true
+          # authorizer:
+          #   name: auth_log
+          #   arn: arn:aws:cognito-idp:us-east-2:017065859617:userpool/us-east-2_G0Ce3hlva
+          request:
+            template:
+              application/json: >
+                {
+                  "email" : "$input.params("email")",
+                }
+  newBigApiCreateTop:
+    handler: newBigApiCreateTop.newBigApiCreateTop
+    package:
+      include:
+        - node_modules/**
+        
+    events:
+      - http:
+          method: GET
+          path: api/v1/create-top
+          integration: lambda
+          cors: true
+          # authorizer:
+          #   name: auth_log
+          #   arn: arn:aws:cognito-idp:us-east-2:017065859617:userpool/us-east-2_G0Ce3hlva
+          request:
+            template:
+              application/json: >
+                {
+                  "unem" : "$input.params("unem")",
+                  "proxy" : "$input.params("proxy")"
+                }
